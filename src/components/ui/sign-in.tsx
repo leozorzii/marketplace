@@ -82,7 +82,7 @@ export const SignInPage = ({
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-foreground">
-                  Password
+                  Senha
                 </Label>
                 <div className="relative">
                   <Input
@@ -120,7 +120,7 @@ export const SignInPage = ({
                   htmlFor="remember"
                   className="text-sm text-muted-foreground cursor-pointer"
                 >
-                  Remember me
+                  Lembrar de mim
                 </Label>
               </div>
               <button
@@ -128,7 +128,7 @@ export const SignInPage = ({
                 onClick={onResetPassword}
                 className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
               >
-                Forgot password?
+                Esqueceu a senha?
               </button>
             </div>
 
@@ -136,7 +136,7 @@ export const SignInPage = ({
               type="submit"
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6"
             >
-              Sign In
+              faça login
             </Button>
 
             <div className="relative">
@@ -145,7 +145,7 @@ export const SignInPage = ({
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-4 bg-background text-muted-foreground">
-                  Or continue with
+                  Ou continue com
                 </span>
               </div>
             </div>
@@ -174,19 +174,19 @@ export const SignInPage = ({
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              Continue with Google
+              Continue com Google
             </Button>
           </form>
 
           {/* Sign Up Link */}
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
+              Ainda não tem uma conta?{" "}
               <button
                 onClick={onCreateAccount}
                 className="font-medium text-primary hover:text-primary/80 transition-colors"
               >
-                Create account
+                Criar conta
               </button>
             </p>
           </div>

@@ -61,7 +61,7 @@ const Marketplace = () => {
     }
   ];
 
-  const categories = ["Todos", "Fertilizantes", "Sementes", "Equipamentos", "Defensivos", "Ferramentas"];
+  const categories = ["Todos", "Consultoria", "Sementes", "Equipamentos", "Defensivos", "Ferramentas"];
   const [selectedCategory, setSelectedCategory] = useState("Todos");
 
   const filteredProducts = selectedCategory === "Todos" 

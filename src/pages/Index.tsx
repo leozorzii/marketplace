@@ -15,16 +15,16 @@ const Index = () => {
   };
 
   const handleGoogleSignIn = () => {
-    console.log("Continue with Google clicked");
-    alert("Continue with Google clicked");
+    console.log("Continuar com Google");
+    alert("Continue com google");
   };
   
   const handleResetPassword = () => {
-    alert("Reset Password clicked");
+    alert("Redefinir senha");
   };
 
   const handleCreateAccount = () => {
-    alert("Create Account clicked");
+    alert("Criando conta");
   };
 
   return (
