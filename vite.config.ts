@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
 
 
-    base: mode === "production" ? `/${marketplace}/` : "/",
+    base: mode === "production" ? "/${marketplace}/" : "/",
 
     build: {
       outDir: "dist",
