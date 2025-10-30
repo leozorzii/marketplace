@@ -4,10 +4,6 @@
 
 **URL**: https://lovable.dev/projects/f4edcd1e-2f18-4f24-a075-638cb23e3040
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
 Simply visit the [Lovable Project](https://lovable.dev/projects/f4edcd1e-2f18-4f24-a075-638cb23e3040) and start prompting.
 
 # 🛍️ Marketplace | Aplicação de Comércio Eletrônico
