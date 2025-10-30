@@ -1,4 +1,5 @@
 import { SignInPage } from "@/components/ui/sign-in";
+import heroImage from "@/assets/agro-robot-hero.png";
 
 const Index = () => {
   const handleSignIn = (event: React.FormEvent<HTMLFormElement>) => {
@@ -25,7 +26,7 @@ const Index = () => {
   return (
     <div className="bg-background text-foreground">
       <SignInPage
-        heroImageSrc="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=2160&q=80"
+        heroImageSrc={heroImage}
         onSignIn={handleSignIn}
         onGoogleSignIn={handleGoogleSignIn}
         onResetPassword={handleResetPassword}
