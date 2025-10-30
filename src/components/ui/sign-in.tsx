@@ -1,19 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-export interface Testimonial {
-  avatarSrc: string;
-  name: string;
-  handle: string;
-  text: string;
-}
+import agrocashLogo from "@/assets/agrocash-logo.png";
 
 interface SignInPageProps {
   heroImageSrc: string;
-  testimonials: Testimonial[];
   onSignIn: (event: React.FormEvent<HTMLFormElement>) => void;
   onGoogleSignIn: () => void;
   onResetPassword: () => void;
@@ -22,7 +13,6 @@ interface SignInPageProps {
 
 export const SignInPage = ({
   heroImageSrc,
-  testimonials,
   onSignIn,
   onGoogleSignIn,
   onResetPassword,
@@ -39,46 +29,14 @@ export const SignInPage = ({
           <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/70 to-primary/50" />
         </div>
         
-        <div className="relative z-10 flex flex-col justify-end p-12 w-full">
-          <div className="space-y-6">
+        <div className="relative z-10 flex flex-col justify-center items-center p-12 w-full">
+          <div className="space-y-6 text-center">
             <h1 className="text-4xl font-bold text-primary-foreground">
-              Welcome Back
+              Bem-vindo ao Agrocash
             </h1>
             <p className="text-lg text-primary-foreground/90">
-              Join thousands who trust our platform for their agricultural needs
+              Gestão e Finanças para o Agronegócio
             </p>
-            
-            {/* Testimonials */}
-            <div className="space-y-4 mt-8">
-              {testimonials.map((testimonial, index) => (
-                <Card
-                  key={index}
-                  className="bg-card/10 backdrop-blur-sm border-primary-foreground/20 p-4"
-                >
-                  <div className="flex items-start gap-3">
-                    <Avatar className="h-10 w-10 border-2 border-secondary">
-                      <AvatarImage src={testimonial.avatarSrc} alt={testimonial.name} />
-                      <AvatarFallback className="bg-secondary text-secondary-foreground">
-                        {testimonial.name.split(" ").map(n => n[0]).join("")}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center gap-2">
-                        <p className="font-semibold text-primary-foreground text-sm">
-                          {testimonial.name}
-                        </p>
-                        <p className="text-xs text-primary-foreground/70">
-                          {testimonial.handle}
-                        </p>
-                      </div>
-                      <p className="text-sm text-primary-foreground/80 leading-relaxed">
-                        {testimonial.text}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -88,26 +46,16 @@ export const SignInPage = ({
         <div className="w-full max-w-md space-y-8">
           {/* Logo/Brand */}
           <div className="text-center space-y-2">
-            <div className="flex justify-center mb-4">
-              <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                <svg
-                  className="h-7 w-7 text-primary-foreground"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
-              </div>
+            <div className="flex justify-center mb-6">
+              <img 
+                src={agrocashLogo} 
+                alt="Agrocash Logo" 
+                className="h-20 w-auto"
+              />
             </div>
-            <h2 className="text-3xl font-bold text-foreground">Sign In</h2>
+            <h2 className="text-3xl font-bold text-foreground">Entrar</h2>
             <p className="text-muted-foreground">
-              Enter your credentials to access your account
+              Acesse sua conta Agrocash
             </p>
           </div>
 
