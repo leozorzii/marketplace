@@ -5,68 +5,82 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Search, ShoppingCart, User, Menu } from "lucide-react";
 import agrocashLogo from "@/assets/agrocash-logo.png";
+import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 
 const Marketplace = () => {
   const [cartCount] = useState(0);
+  const [quoteDialogOpen, setQuoteDialogOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<string>("");
 
   // Mock products data
   const products = [
     {
       id: 1,
-      name: "Fertilizante Orgânico Premium",
-      price: "R$ 89,90",
-      category: "Fertilizantes",
-      image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&h=300&fit=crop",
-      stock: "Em estoque"
+      name: "Consultoria em Gestão Agrícola",
+      price: "Sob consulta",
+      category: "Consultoria",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop",
+      stock: "Disponível",
+      isConsultancy: true
     },
     {
       id: 2,
+      name: "Análise de Solo Completa",
+      price: "Sob consulta",
+      category: "Consultoria",
+      image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop",
+      stock: "Disponível",
+      isConsultancy: true
+    },
+    {
+      id: 3,
+      name: "Planejamento de Safra Personalizado",
+      price: "Sob consulta",
+      category: "Consultoria",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
+      stock: "Disponível",
+      isConsultancy: true
+    },
+    {
+      id: 4,
       name: "Sementes de Soja Transgênica",
       price: "R$ 245,00",
       category: "Sementes",
       image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=300&fit=crop",
-      stock: "Em estoque"
-    },
-    {
-      id: 3,
-      name: "Equipamento de Irrigação Automático",
-      price: "R$ 1.890,00",
-      category: "Equipamentos",
-      image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop",
-      stock: "Poucas unidades"
-    },
-    {
-      id: 4,
-      name: "Defensivo Agrícola Ecológico",
-      price: "R$ 156,50",
-      category: "Defensivos",
-      image: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=300&fit=crop",
-      stock: "Em estoque"
+      stock: "Em estoque",
+      isConsultancy: false
     },
     {
       id: 5,
-      name: "Kit Ferramentas para Plantio",
-      price: "R$ 329,90",
-      category: "Ferramentas",
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      stock: "Em estoque"
+      name: "Fertilizante Orgânico Premium",
+      price: "R$ 89,90",
+      category: "Fertilizantes",
+      image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&h=300&fit=crop",
+      stock: "Em estoque",
+      isConsultancy: false
     },
     {
       id: 6,
-      name: "Adubo NPK Profissional",
-      price: "R$ 198,00",
-      category: "Fertilizantes",
-      image: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&h=300&fit=crop",
-      stock: "Em estoque"
+      name: "Equipamento de Irrigação Automático",
+      price: "R$ 1.890,00",
+      category: "Equipamentos",
+      image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop",
+      stock: "Poucas unidades",
+      isConsultancy: false
     }
   ];
 
-  const categories = ["Todos", "Fertilizantes", "Sementes", "Equipamentos", "Defensivos", "Ferramentas"];
+  const categories = ["Todos", "Consultoria", "Fertilizantes", "Sementes", "Equipamentos"];
   const [selectedCategory, setSelectedCategory] = useState("Todos");
 
   const filteredProducts = selectedCategory === "Todos" 
     ? products 
     : products.filter(p => p.category === selectedCategory);
+
+  const handleQuoteRequest = (productName: string) => {
+    setSelectedProduct(productName);
+    setQuoteDialogOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -180,8 +194,11 @@ const Marketplace = () => {
                 </p>
               </CardContent>
               <CardFooter className="p-4 pt-0">
-                <Button className="w-full bg-primary hover:bg-primary/90">
-                  Adicionar ao Carrinho
+                <Button 
+                  className="w-full"
+                  onClick={() => handleQuoteRequest(product.name)}
+                >
+                  {product.isConsultancy ? "Solicitar Orçamento" : "Pedir Orçamento"}
                 </Button>
               </CardFooter>
             </Card>
@@ -197,6 +214,12 @@ const Marketplace = () => {
           </div>
         </div>
       </footer>
+
+      <QuoteRequestDialog
+        open={quoteDialogOpen}
+        onOpenChange={setQuoteDialogOpen}
+        productName={selectedProduct}
+      />
     </div>
   );
 };
