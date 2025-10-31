@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,7 +18,7 @@ const Marketplace = () => {
       name: "Consultoria em Gestão Agrícola",
       price: "Sob consulta",
       category: "Gestão",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=300&fit=crop",
       stock: "Disponível",
       description: "Otimize sua produção com consultoria especializada"
     },
@@ -27,7 +27,7 @@ const Marketplace = () => {
       name: "Análise de Solo Completa",
       price: "Sob consulta",
       category: "Análises",
-      image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&h=300&fit=crop",
       stock: "Disponível",
       description: "Análise detalhada para melhor produtividade"
     },
@@ -36,7 +36,7 @@ const Marketplace = () => {
       name: "Planejamento de Safra Personalizado",
       price: "Sob consulta",
       category: "Planejamento",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=300&fit=crop",
       stock: "Disponível",
       description: "Planeje sua safra com eficiência máxima"
     },
@@ -45,7 +45,7 @@ const Marketplace = () => {
       name: "Consultoria em Sustentabilidade",
       price: "Sob consulta",
       category: "Sustentabilidade",
-      image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
       stock: "Disponível",
       description: "Práticas sustentáveis para seu negócio"
     },
@@ -54,7 +54,7 @@ const Marketplace = () => {
       name: "Diagnóstico de Produtividade",
       price: "Sob consulta",
       category: "Análises",
-      image: "https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?w=400&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=400&h=300&fit=crop",
       stock: "Disponível",
       description: "Identifique gargalos e oportunidades"
     },
@@ -63,7 +63,7 @@ const Marketplace = () => {
       name: "Consultoria Financeira Rural",
       price: "Sob consulta",
       category: "Gestão",
-      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop",
       stock: "Disponível",
       description: "Gestão financeira especializada para o agro"
     }
@@ -75,6 +75,37 @@ const Marketplace = () => {
   const filteredProducts = selectedCategory === "Todos" 
     ? products 
     : products.filter(p => p.category === selectedCategory);
+
+  // Scroll animation observer
+  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = Number(entry.target.getAttribute('data-product-id'));
+            setVisibleCards((prev) => new Set([...prev, id]));
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
+      }
+    );
+
+    cardRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      cardRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, [filteredProducts]);
 
   const handleQuoteRequest = (productName: string) => {
     setSelectedProduct(productName);
@@ -115,13 +146,13 @@ const Marketplace = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-primary text-primary-foreground py-16">
+      <section className="bg-primary text-primary-foreground py-16 animate-fade-in">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold">
+            <h1 className="text-4xl md:text-5xl font-bold animate-fade-in-up">
               Consultoria Especializada em Agronegócio
             </h1>
-            <p className="text-lg text-primary-foreground/90">
+            <p className="text-lg text-primary-foreground/90 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               Serviços profissionais para otimizar sua produção
             </p>
             
@@ -159,17 +190,28 @@ const Marketplace = () => {
       {/* Products Grid */}
       <section className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProducts.map((product) => (
-            <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <CardHeader className="p-0">
-                <div className="aspect-video overflow-hidden">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              </CardHeader>
+          {filteredProducts.map((product, index) => (
+            <div
+              key={product.id}
+              ref={(el) => (cardRefs.current[index] = el)}
+              data-product-id={product.id}
+              className={`transition-all duration-700 ${
+                visibleCards.has(product.id)
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <CardHeader className="p-0">
+                  <div className="aspect-video overflow-hidden">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </CardHeader>
               <CardContent className="p-4 space-y-2">
                 <Badge variant="secondary" className="text-xs">
                   {product.category}
@@ -184,15 +226,16 @@ const Marketplace = () => {
                   {product.price}
                 </p>
               </CardContent>
-              <CardFooter className="p-4 pt-0">
-                <Button 
-                  className="w-full"
-                  onClick={() => handleQuoteRequest(product.name)}
-                >
-                  Solicitar Orçamento
-                </Button>
-              </CardFooter>
-            </Card>
+                <CardFooter className="p-4 pt-0">
+                  <Button 
+                    className="w-full transition-all hover:scale-105"
+                    onClick={() => handleQuoteRequest(product.name)}
+                  >
+                    Solicitar Orçamento
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
           ))}
         </div>
       </section>
