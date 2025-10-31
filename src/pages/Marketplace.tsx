@@ -3,74 +3,73 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, ShoppingCart, User, Menu } from "lucide-react";
+import { Search, User, Menu, Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
 import agrocashLogo from "@/assets/agrocash-logo.png";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 
 const Marketplace = () => {
-  const [cartCount] = useState(0);
   const [quoteDialogOpen, setQuoteDialogOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
 
-  // Mock products data
+  // Serviços de consultoria
   const products = [
     {
       id: 1,
       name: "Consultoria em Gestão Agrícola",
       price: "Sob consulta",
-      category: "Consultoria",
+      category: "Gestão",
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop",
       stock: "Disponível",
-      isConsultancy: true
+      description: "Otimize sua produção com consultoria especializada"
     },
     {
       id: 2,
       name: "Análise de Solo Completa",
       price: "Sob consulta",
-      category: "Consultoria",
+      category: "Análises",
       image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop",
       stock: "Disponível",
-      isConsultancy: true
+      description: "Análise detalhada para melhor produtividade"
     },
     {
       id: 3,
       name: "Planejamento de Safra Personalizado",
       price: "Sob consulta",
-      category: "Consultoria",
+      category: "Planejamento",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
       stock: "Disponível",
-      isConsultancy: true
+      description: "Planeje sua safra com eficiência máxima"
     },
     {
       id: 4,
-      name: "Sementes de Soja Transgênica",
-      price: "R$ 245,00",
-      category: "Sementes",
-      image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=300&fit=crop",
-      stock: "Em estoque",
-      isConsultancy: false
+      name: "Consultoria em Sustentabilidade",
+      price: "Sob consulta",
+      category: "Sustentabilidade",
+      image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400&h=300&fit=crop",
+      stock: "Disponível",
+      description: "Práticas sustentáveis para seu negócio"
     },
     {
       id: 5,
-      name: "Fertilizante Orgânico Premium",
-      price: "R$ 89,90",
-      category: "Fertilizantes",
-      image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&h=300&fit=crop",
-      stock: "Em estoque",
-      isConsultancy: false
+      name: "Diagnóstico de Produtividade",
+      price: "Sob consulta",
+      category: "Análises",
+      image: "https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?w=400&h=300&fit=crop",
+      stock: "Disponível",
+      description: "Identifique gargalos e oportunidades"
     },
     {
       id: 6,
-      name: "Equipamento de Irrigação Automático",
-      price: "R$ 1.890,00",
-      category: "Equipamentos",
-      image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop",
-      stock: "Poucas unidades",
-      isConsultancy: false
+      name: "Consultoria Financeira Rural",
+      price: "Sob consulta",
+      category: "Gestão",
+      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=300&fit=crop",
+      stock: "Disponível",
+      description: "Gestão financeira especializada para o agro"
     }
   ];
 
-  const categories = ["Todos", "Consultoria", "Fertilizantes", "Sementes", "Equipamentos"];
+  const categories = ["Todos", "Gestão", "Análises", "Planejamento", "Sustentabilidade"];
   const [selectedCategory, setSelectedCategory] = useState("Todos");
 
   const filteredProducts = selectedCategory === "Todos" 
@@ -104,14 +103,6 @@ const Marketplace = () => {
             </div>
             
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" className="relative">
-                <ShoppingCart className="h-5 w-5" />
-                {cartCount > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-accent">
-                    {cartCount}
-                  </Badge>
-                )}
-              </Button>
               <Button variant="ghost" size="icon">
                 <User className="h-5 w-5" />
               </Button>
@@ -128,10 +119,10 @@ const Marketplace = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <h1 className="text-4xl md:text-5xl font-bold">
-              Marketplace do Agronegócio
+              Consultoria Especializada em Agronegócio
             </h1>
             <p className="text-lg text-primary-foreground/90">
-              Encontre os melhores produtos para sua fazenda
+              Serviços profissionais para otimizar sua produção
             </p>
             
             {/* Search Bar */}
@@ -139,7 +130,7 @@ const Marketplace = () => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Buscar produtos, sementes, equipamentos..."
+                placeholder="Buscar serviços de consultoria..."
                 className="pl-12 py-6 bg-background text-foreground border-border"
               />
             </div>
@@ -198,7 +189,7 @@ const Marketplace = () => {
                   className="w-full"
                   onClick={() => handleQuoteRequest(product.name)}
                 >
-                  {product.isConsultancy ? "Solicitar Orçamento" : "Pedir Orçamento"}
+                  Solicitar Orçamento
                 </Button>
               </CardFooter>
             </Card>
@@ -208,8 +199,67 @@ const Marketplace = () => {
 
       {/* Footer */}
       <footer className="bg-card border-t border-border mt-12">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-muted-foreground">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            {/* Sobre */}
+            <div>
+              <h3 className="font-bold text-lg mb-4">Sobre o Agrocash</h3>
+              <p className="text-muted-foreground text-sm">
+                Consultoria especializada em agronegócio, oferecendo soluções personalizadas para maximizar a produtividade e sustentabilidade do seu negócio rural.
+              </p>
+            </div>
+
+            {/* Contato */}
+            <div>
+              <h3 className="font-bold text-lg mb-4">Contato</h3>
+              <div className="space-y-3">
+                <a href="mailto:contato@agrocash.com.br" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm">
+                  <Mail className="h-4 w-4" />
+                  contato@agrocash.com.br
+                </a>
+                <a href="tel:+5511999999999" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm">
+                  <Phone className="h-4 w-4" />
+                  (11) 99999-9999
+                </a>
+              </div>
+            </div>
+
+            {/* Redes Sociais */}
+            <div>
+              <h3 className="font-bold text-lg mb-4">Redes Sociais</h3>
+              <div className="flex gap-4">
+                <a 
+                  href="https://facebook.com/agrocash" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 rounded-full bg-primary/10 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="h-5 w-5" />
+                </a>
+                <a 
+                  href="https://instagram.com/agrocash" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 rounded-full bg-primary/10 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a 
+                  href="https://linkedin.com/company/agrocash" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 rounded-full bg-primary/10 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-border pt-6 text-center text-muted-foreground text-sm">
             <p>&copy; 2025 Agrocash. Todos os direitos reservados.</p>
           </div>
         </div>
