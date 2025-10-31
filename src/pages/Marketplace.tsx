@@ -13,55 +13,43 @@ const Marketplace = () => {
   const products = [
     {
       id: 1,
-      name: "Fertilizante Orgânico Premium",
-      price: "R$ 89,90",
-      category: "Fertilizantes",
+      name: "Análise de Solo Completa",
+      category: "Consultoria",
       image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&h=300&fit=crop",
-      stock: "Em estoque"
     },
     {
       id: 2,
-      name: "Sementes de Soja Transgênica",
-      price: "R$ 245,00",
-      category: "Sementes",
+      name: "Consultoria em Gestão Agrícola",
+      category: "Consultoria",
       image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=300&fit=crop",
-      stock: "Em estoque"
     },
     {
       id: 3,
-      name: "Equipamento de Irrigação Automático",
-      price: "R$ 1.890,00",
-      category: "Equipamentos",
+      name: "Planejamento de Safra Personalizado",
+      category: "Consultoria",
       image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop",
-      stock: "Poucas unidades"
     },
     {
       id: 4,
-      name: "Defensivo Agrícola Ecológico",
-      price: "R$ 156,50",
-      category: "Defensivos",
+      name: "Consulta",
+      category: "Consultoria",
       image: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=400&h=300&fit=crop",
-      stock: "Em estoque"
     },
     {
       id: 5,
-      name: "Kit Ferramentas para Plantio",
-      price: "R$ 329,90",
-      category: "Ferramentas",
+      name: "Consulta",
+      category: "Consultoria",
       image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      stock: "Em estoque"
     },
     {
       id: 6,
-      name: "Adubo NPK Profissional",
-      price: "R$ 198,00",
-      category: "Fertilizantes",
+      name: "Consulta",
+      category: "Consultoria",
       image: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&h=300&fit=crop",
-      stock: "Em estoque"
     }
   ];
 
-  const categories = ["Todos", "Consultoria", "Sementes", "Equipamentos", "Defensivos", "Ferramentas"];
+  const categories = ["Todos", "Consultoria", "Ferramentas"];
   const [selectedCategory, setSelectedCategory] = useState("Todos");
 
   const filteredProducts = selectedCategory === "Todos" 
@@ -117,7 +105,7 @@ const Marketplace = () => {
               Marketplace do Agronegócio
             </h1>
             <p className="text-lg text-primary-foreground/90">
-              Encontre os melhores produtos para sua fazenda
+              A Melhor Gestão para a sua fazenda
             </p>
             
             {/* Search Bar */}
@@ -173,15 +161,13 @@ const Marketplace = () => {
                   {product.name}
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  {product.stock}
                 </p>
                 <p className="text-2xl font-bold text-primary">
-                  {product.price}
                 </p>
               </CardContent>
               <CardFooter className="p-4 pt-0">
                 <Button className="w-full bg-primary hover:bg-primary/90">
-                  Adicionar ao Carrinho
+                  Solicitar Orçamento
                 </Button>
               </CardFooter>
             </Card>
