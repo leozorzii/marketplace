@@ -74,7 +74,7 @@ export const SignInPage = ({
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="name@example.com"
+                  placeholder="nome@email.com"
                   required
                   className="bg-background border-border focus:ring-primary"
                 />
