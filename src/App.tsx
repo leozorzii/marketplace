@@ -2,6 +2,9 @@ import { Suspense } from "react";
 import { Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import Marketplace from "./pages/Marketplace";
+import Mercado from "./pages/Mercado";
+import Blog from "./pages/Blog";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
 function Navbar() {
@@ -34,6 +37,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/mercado" element={<Mercado />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/404" element={<NotFound />} />
             <Route path="*" element={<Navigate to="/404" replace />} />
           </Routes>

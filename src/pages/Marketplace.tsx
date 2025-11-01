@@ -15,6 +15,7 @@ import {
 import agrocashLogo from "@/assets/agrocash-logo.png";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const Marketplace = () => {
   const [quoteDialogOpen, setQuoteDialogOpen] = useState(false);
@@ -76,17 +77,19 @@ const Marketplace = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-8">
-              <img src={agrocashLogo} alt="Agrocash" className="h-12" />
+              <Link to="/marketplace">
+                <img src={agrocashLogo} alt="Agrocash" className="h-12 cursor-pointer" />
+              </Link>
               <nav className="hidden md:flex gap-6">
-                <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">
+                <Link to="/marketplace" className="text-foreground hover:text-primary transition-colors font-medium">
                   Marketplace
-                </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Minhas Compras
-                </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Vendedores
-                </a>
+                </Link>
+                <Link to="/mercado" className="text-muted-foreground hover:text-primary transition-colors">
+                  Mercado
+                </Link>
+                <Link to="/blog" className="text-muted-foreground hover:text-primary transition-colors">
+                  Blog
+                </Link>
               </nav>
             </div>
             

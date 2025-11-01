@@ -16,10 +16,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 
 const quoteSchema = z.object({
@@ -27,6 +29,9 @@ const quoteSchema = z.object({
   email: z.string().trim().email("Email inválido").max(255, "Email muito longo"),
   phone: z.string().trim().min(10, "Telefone inválido").max(20, "Telefone muito longo"),
   message: z.string().trim().min(10, "Mensagem muito curta").max(1000, "Mensagem muito longa"),
+  acceptTerms: z.boolean().refine((val) => val === true, {
+    message: "Você deve aceitar os termos de uso",
+  }),
 });
 
 type QuoteFormData = z.infer<typeof quoteSchema>;
@@ -48,6 +53,7 @@ export const QuoteRequestDialog = ({ open, onOpenChange, productName }: QuoteReq
       email: "",
       phone: "",
       message: `Olá, gostaria de solicitar um orçamento para: ${productName}`,
+      acceptTerms: false,
     },
   });
 
@@ -144,6 +150,33 @@ export const QuoteRequestDialog = ({ open, onOpenChange, productName }: QuoteReq
                     />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="acceptTerms"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>
+                      Aceito os termos de uso e política de privacidade
+                    </FormLabel>
+                    <FormDescription>
+                      Ao enviar, você concorda com nossos{" "}
+                      <a href="#" className="text-primary hover:underline">
+                        termos de uso
+                      </a>
+                    </FormDescription>
+                    <FormMessage />
+                  </div>
                 </FormItem>
               )}
             />
