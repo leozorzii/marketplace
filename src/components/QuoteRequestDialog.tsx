@@ -23,6 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { TermsOfUseDialog } from "./TermsOfUseDialog";
 
 const quoteSchema = z.object({
   name: z.string().trim().min(1, "Nome é obrigatório").max(100, "Nome muito longo"),
@@ -44,6 +45,7 @@ interface QuoteRequestDialogProps {
 
 export const QuoteRequestDialog = ({ open, onOpenChange, productName }: QuoteRequestDialogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [termsDialogOpen, setTermsDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<QuoteFormData>({
@@ -171,9 +173,13 @@ export const QuoteRequestDialog = ({ open, onOpenChange, productName }: QuoteReq
                     </FormLabel>
                     <FormDescription>
                       Ao enviar, você concorda com nossos{" "}
-                      <a href="#" className="text-primary hover:underline">
+                      <button
+                        type="button"
+                        onClick={() => setTermsDialogOpen(true)}
+                        className="text-primary hover:underline font-medium"
+                      >
                         termos de uso
-                      </a>
+                      </button>
                     </FormDescription>
                     <FormMessage />
                   </div>
@@ -197,6 +203,15 @@ export const QuoteRequestDialog = ({ open, onOpenChange, productName }: QuoteReq
           </form>
         </Form>
       </DialogContent>
+
+      <TermsOfUseDialog
+        open={termsDialogOpen}
+        onOpenChange={setTermsDialogOpen}
+        onAccept={() => {
+          form.setValue("acceptTerms", true);
+          setTermsDialogOpen(false);
+        }}
+      />
     </Dialog>
   );
 };
