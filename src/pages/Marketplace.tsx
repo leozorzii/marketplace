@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, ShoppingCart, User, Menu } from "lucide-react";
+import { Search, User, Menu, LogOut, Settings, UserCircle, Mail, Phone, Facebook, Instagram, Linkedin } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import agrocashLogo from "@/assets/agrocash-logo.png";
+import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
+import { useToast } from "@/hooks/use-toast";
 
 const Marketplace = () => {
+  const [quoteDialogOpen, setQuoteDialogOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const { toast } = useToast();
   const [cartCount] = useState(0);
 
   // Mock products data
@@ -78,17 +91,30 @@ const Marketplace = () => {
             </div>
             
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" className="relative">
-                <ShoppingCart className="h-5 w-5" />
-                {cartCount > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-accent">
-                    {cartCount}
-                  </Badge>
-                )}
-              </Button>
-              <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <UserCircle className="mr-2 h-4 w-4" />
+                    <span>Perfil</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Configurações</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="text-destructive">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sair</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
               </Button>
@@ -166,7 +192,13 @@ const Marketplace = () => {
                 </p>
               </CardContent>
               <CardFooter className="p-4 pt-0">
-                <Button className="w-full bg-primary hover:bg-primary/90">
+                <Button 
+                  className="w-full bg-primary hover:bg-primary/90 transition-all hover:scale-105"
+                  onClick={() => {
+                    setSelectedProduct(product.name);
+                    setQuoteDialogOpen(true);
+                  }}
+                >
                   Solicitar Orçamento
                 </Button>
               </CardFooter>
@@ -177,12 +209,75 @@ const Marketplace = () => {
 
       {/* Footer */}
       <footer className="bg-card border-t border-border mt-12">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-muted-foreground">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="font-semibold text-lg mb-4">Sobre o Agrocash</h3>
+              <p className="text-muted-foreground text-sm">
+                Gestão e Finanças para o Agronegócio. Soluções completas para otimizar sua produção.
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-lg mb-4">Contato</h3>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Mail className="h-4 w-4" />
+                  <a href="mailto:contato@agrocash.com" className="hover:text-primary transition-colors">
+                    contato@agrocash.com
+                  </a>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" />
+                  <a href="tel:+5511999999999" className="hover:text-primary transition-colors">
+                    (11) 99999-9999
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-lg mb-4">Redes Sociais</h3>
+              <div className="flex gap-4">
+                <a 
+                  href="https://facebook.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Facebook className="h-6 w-6" />
+                </a>
+                <a 
+                  href="https://instagram.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Instagram className="h-6 w-6" />
+                </a>
+                <a 
+                  href="https://linkedin.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Linkedin className="h-6 w-6" />
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-8 pt-8 border-t border-border text-center text-muted-foreground text-sm">
             <p>&copy; 2025 Agrocash. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>
+
+      <QuoteRequestDialog 
+        open={quoteDialogOpen}
+        onOpenChange={setQuoteDialogOpen}
+        productName={selectedProduct}
+      />
     </div>
   );
 };

@@ -25,20 +25,18 @@ export const SignInPage = ({
   return (
     <div className="min-h-screen flex">
       {/* Left Side - Hero Image & Testimonials */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-primary overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImageSrc})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/70 to-primary/50" />
-        </div>
+        />
         
-        <div className="relative z-10 flex flex-col justify-center items-center p-12 w-full">
-          <div className="space-y-6 text-center">
-            <h1 className="text-4xl font-bold text-primary-foreground">
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-12">
+          <div className="space-y-4">
+            <h1 className="text-4xl font-bold text-white">
               Bem-vindo ao Agrocash
             </h1>
-            <p className="text-lg text-primary-foreground/90">
+            <p className="text-lg text-white/90">
               Gestão e Finanças para o Agronegócio
             </p>
           </div>
